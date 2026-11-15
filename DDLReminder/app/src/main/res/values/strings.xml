@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">DDL 清单</string>
+
+    <string name="home_title">我的清单</string>
+    <string name="list_pending_count">%1$d 个未完成</string>
+    <string name="empty_lists_title">还没有清单</string>
+    <string name="empty_lists_hint">点击底栏的清单按钮即可新建一个清单</string>
+    <string name="empty_tasks">暂无任务</string>
+    <string name="empty_tasks_hint">点击右下角 + 添加任务</string>
+
+    <string name="add_list">新建清单</string>
+    <string name="rename_list">重命名清单</string>
+    <string name="delete_list">删除清单</string>
+    <string name="list_name">清单名称</string>
+    <string name="add_task">新建任务</string>
+    <string name="edit_task">编辑任务</string>
+    <string name="task_title">任务名称</string>
+    <string name="delete_task">删除任务</string>
+
+    <string name="save">保存</string>
+    <string name="cancel">取消</string>
+    <string name="delete">删除</string>
+    <string name="create">创建</string>
+    <string name="done">确定</string>
+    <string name="back">返回</string>
+    <string name="more">更多</string>
+
+    <string name="ddl_label">截止时间</string>
+    <string name="ddl_optional_hint">可选；不设置将不会提醒</string>
+    <string name="ddl_reminder_hint">将在截止前 24 小时和 12 小时提醒</string>
+    <string name="add_ddl">添加截止时间</string>
+    <string name="clear_ddl">清除截止时间</string>
+    <string name="choose_time">选择时间</string>
+    <string name="deadline_prefix">截止 %1$s</string>
+    <string name="no_ddl">无截止时间</string>
+    <string name="completed">已完成</string>
+    <string name="completed_section">已完成 · %1$d</string>
+
+    <string name="delete_list_message">删除清单会同时删除其中的所有任务，且无法恢复。</string>
+    <string name="delete_task_message">任务将移入回收站，可随时恢复。</string>
+
+    <string name="notes_label">备注</string>
+    <string name="add_attachment">添加图片或文件</string>
+    <string name="attachment_hint">可上传本地图片或文件，点击附件即可用系统默认应用打开。</string>
+    <string name="attachment_type_image">图片</string>
+    <string name="attachment_type_file">文件</string>
+    <string name="remove_attachment">移除附件</string>
+    <string name="move_to_trash">移入回收站</string>
+
+    <string name="trash_title">回收站</string>
+    <string name="trash_count">共 %1$d 项</string>
+    <string name="trash_retention_hint">显示最近 %1$d 天内删除的任务，到期后自动彻底删除。</string>
+    <string name="trash_empty_title">回收站是空的</string>
+    <string name="trash_empty_hint">删除的任务会先放到这里，可随时恢复。</string>
+    <string name="trash_source_user">手动删除</string>
+    <string name="trash_source_auto">自动删除</string>
+    <string name="trash_deleted_at">删除时间 %1$s</string>
+    <string name="trash_expires_in">%1$s 后彻底删除</string>
+    <string name="trash_list_and_expiry">%1$s · %2$s 后彻底删除</string>
+    <string name="restore">恢复</string>
+    <string name="delete_forever">彻底删除</string>
+    <string name="delete_forever_title">彻底删除任务？</string>
+    <string name="delete_forever_message">删除后无法恢复。</string>
+
+    <string name="notifications_disabled">通知权限未开启，DDL 提醒无法显示。</string>
+    <string name="exact_alarms_disabled">精确闹钟未开启，提醒时间可能延迟。</string>
+    <string name="go_enable">去开启</string>
+    <string name="go_settings">去设置</string>
+
+    <string name="reminder_channel_name">任务截止提醒</string>
+    <string name="reminder_channel_description">任务截止前 24 小时和 12 小时的高优先级提醒</string>
+    <string name="notification_title">任务提醒：%1$s - %2$s</string>
+    <string name="notification_countdown">距离截止时间还有%1$s</string>
+
+    <string name="nav_lists">清单</string>
+    <string name="nav_settings">设置</string>
+    <string name="switch_list">切换清单</string>
+    <string name="list_empty_picker">还没有清单，先新建一个吧</string>
+    <string name="new_list_name">清单名称</string>
+    <string name="new_list">新建清单</string>
+    <string name="add">添加</string>
+
+    <string name="settings_title">设置</string>
+    <string name="settings_user_stats">清单 %1$d 个 · 任务 %2$d 条</string>
+    <string name="change_user_name">修改</string>
+    <string name="user_name">用户名</string>
+    <string name="settings_appearance">外观</string>
+    <string name="change_background">更换背景图片</string>
+    <string name="background_custom">当前：自定义图片</string>
+    <string name="background_default">当前：默认渐变背景</string>
+    <string name="reset_background">恢复默认背景</string>
+    <string name="reset_background_desc">清除自定义图片，回到默认渐变背景</string>
+    <string name="glass_fill_title">卡片填充透明度</string>
+    <string name="glass_fill_desc">数值越高，圆角矩形越通透；越低越接近磨砂实色</string>
+    <string name="glass_fill_value">%1$d%%</string>
+    <string name="liquid_fill_alpha_title">透明度</string>
+    <string name="liquid_fill_alpha_desc">液态玻璃卡片的填充不透明度</string>
+    <string name="solid_fill_alpha_title">透明度</string>
+    <string name="solid_fill_alpha_desc">纯色卡片的填充不透明度</string>
+    <string name="solid_fill_alpha_value">%1$d%%</string>
+    <string name="solid_fill_color_title">填充颜色</string>
+    <string name="solid_fill_color_desc">纯色卡片的填充颜色</string>
+    <string name="solid_stroke_title">描边</string>
+    <string name="solid_stroke_desc">纯色卡片的描边宽度，0 为不描边</string>
+    <string name="solid_stroke_value">%1$.2f dp</string>
+    <string name="solid_stroke_reset">恢复默认描边</string>
+
+    <string name="note_label">文字备注</string>
+    <string name="note_hint">写点补充说明，会和图片/文件一起保存</string>
+    <string name="settings_data">数据管理</string>
+    <string name="export_data">导出DDL数据</string>
+    <string name="export_data_desc">把所有清单与事项保存为 JSON 文件</string>
+    <string name="import_data">导入DDL数据</string>
+    <string name="import_data_desc">从备份文件恢复数据，可跨设备使用</string>
+    <string name="settings_reminders">提醒权限</string>
+    <string name="settings_about">关于</string>
+    <string name="version_label">版本号</string>
+    <string name="status_enabled">已开启</string>
+    <string name="status_disabled">未开启</string>
+    <string name="data_local_hint">数据仅保存在本机，换设备前请先导出备份。</string>
+
+    <string name="import_preview_title">导入数据</string>
+    <string name="import_preview_message">文件：%1$s\n清单 %2$d 个，事项 %3$d 条。\n\n合并导入：保留现有数据，同名清单中的事项会追加。\n覆盖导入：先清空现有数据，再导入备份内容。</string>
+    <string name="import_merge">合并导入</string>
+    <string name="import_replace">覆盖导入</string>
+
+    <string name="restore_default_order">恢复默认排序</string>
+    <string name="reorder_hint">长按卡片可拖动排序</string>
+    <string name="drag_handle">拖动排序</string>
+    <string name="glass_compat_title">卡片渲染方案</string>
+    <string name="glass_compat_desc">选择纯色或液态玻璃的卡片渲染方式</string>
+    <string name="render_scheme_solid">纯色</string>
+    <string name="render_scheme_liquid">液态玻璃</string>
+    <string name="render_scheme_hint">纯色兼容性最好；液态玻璃会实时采样背景，低端机型上可能降低流畅度，不可用时自动降级为磨砂效果。</string>
+    <string name="device_info">设备信息</string>
+
+    <string name="more_settings">更多设置</string>
+    <string name="more_settings_desc">已截止标记字号</string>
+    <string name="more_settings_hint">这些选项只影响圆角矩形卡片的外观。</string>
+    <string name="more_settings_empty">暂无更多设置项，相关选项已移至“圆角矩形卡片”。</string>
+    <string name="overdue_removal_countdown">%1$s后将从表中移除</string>
+    <string name="overdue_text_scale_title">已截止标记字号</string>
+    <string name="overdue_text_scale_desc">调整“XXdayXXhourXXmin后将从表中移除”的字号，最大不超过原始大小</string>
+    <string name="overdue_text_scale_value">%1$d%%</string>
+
+    <string name="trash_keep_auto_title">保留到期自动删除的事件</string>
+    <string name="trash_keep_auto_desc">开启后，到期被系统清理的任务也会进入回收站</string>
+    <string name="trash_retention_title">回收站保留时长</string>
+    <string name="trash_retention_desc">从任务移入回收站起算，最多保留 30 天</string>
+    <string name="trash_retention_value">%1$d 天</string>
+    <string name="trash_restore_retention_title">从回收站中恢复的事件</string>
+    <string name="trash_restore_retention_desc">已经超过截止日期两天、再从回收站恢复的事件，最多在清单中再保留这么久</string>
+    <string name="trash_restore_retention_value">%1$d 小时</string>
+    <string name="trash_settings_hint">到期后事件会从清单中自动移除，不影响其他任务的规则。</string>
+    <string name="trash_show_all">全部事件</string>
+    <string name="trash_group_by_list">按清单归类</string>
+    <string name="trash_restore_all">恢复所有事件</string>
+    <string name="trash_restore_group">恢复该组</string>
+    <string name="trash_group_title">%1$s · %2$d 个事件</string>
+    <string name="trash_group_unknown">未归类清单</string>
+    <string name="settings_trash">回收站设置</string>
+    <string name="settings_trash_desc">自动删除事件、回收站保留时长、恢复事件保留时长</string>
+
+    <string name="settings_background">背景</string>
+    <string name="settings_background_desc">更换背景图片或恢复默认背景</string>
+    <string name="settings_glass_cards">圆角矩形卡片</string>
+    <string name="settings_glass_cards_desc">填充透明度、渲染方案与字体颜色</string>
+    <string name="table_text_color_title">清单卡片字体颜色</string>
+    <string name="table_text_color_desc">清单中圆角矩形框内文字的颜色</string>
+    <string name="settings_text_color_title">设置界面字体颜色</string>
+    <string name="settings_text_color_desc">设置界面中圆角矩形框内文字的颜色</string>
+    <string name="color_reset">恢复默认颜色</string>
+    <string name="color_hint">颜色较浅时可能与背景接近，建议选择对比明显的颜色。</string>
+
+    <string name="changelog_title">更新日志</string>
+    <string name="changelog_updated_at">更新时间 2026.11.14</string>
+    <string name="changelog_features">功能更新</string>
+    <string name="changelog_fixes">Bug 修复</string>
+    <string name="changelog_154_title">v1.5.4 · 2026.11.14</string>
+    <string-array name="changelog_154_features">
+        <item>事件备注新增文字备注，可与图片/文件一起保存、编辑和清空</item>
+        <item>卡片渲染方案支持分别设置透明度；纯色方案还可设置填充颜色和描边</item>
+        <item>选择纯色或液态玻璃后，在选项下方直接展开该方案的专属设置</item>
+        <item>回收站支持按来源清单归类查看，并可一键恢复所有事件</item>
+    </string-array>
+    <string-array name="changelog_154_fixes">
+        <item>修复拖动排序松手后卡片错位闪烁的问题</item>
+        <item>修复长按卡片误弹出事件设置界面的问题</item>
+        <item>修复拖动第一个事件后界面自动跳转的问题</item>
+    </string-array>
+    <string name="render_scheme_winui">液态玻璃WinUI</string>
+    <string name="winui_fill_alpha_title">透明度</string>
+    <string name="winui_fill_alpha_desc">液态玻璃WinUI 卡片的染色不透明度</string>
+    <string name="winui_blur_title">模糊</string>
+    <string name="winui_blur_desc">背景模糊半径，0 时仍保留边缘折射</string>
+    <string name="winui_blur_value">%1$d dp</string>
+    <string name="winui_refraction_title">边缘折射</string>
+    <string name="winui_refraction_desc">圆角边缘附近的背景偏移强度</string>
+    <string name="winui_chromatic_title">边缘色散</string>
+    <string name="winui_chromatic_desc">边缘微小的红蓝色分离强度</string>
+    <string name="winui_glare_title">镜面高光</string>
+    <string name="winui_glare_desc">卡片表面的柔和反光强度</string>
+    <string name="winui_perf_title">性能模式</string>
+    <string name="winui_perf_desc">跳过边缘位移渲染，低端设备更流畅</string>
+    <string name="winui_effect_value">%1$d%%</string>
+    <string name="changelog_160_title">v1.6.0 · 2026.11.14</string>
+    <string name="changelog_153_title">v1.5.3 · 2026.11.11</string>
+    <string-array name="changelog_153_features">
+        <item>优化了设置外观的层次逻辑和图案设计</item>
+    </string-array>
+    <string-array name="changelog_153_fixes">
+        <item>修复拖动排序后无法把卡片放回原位的问题</item>
+        <item>修复拖动卡片时内部玻璃渲染不随位置实时更新的问题</item>
+    </string-array>
+    <string name="changelog_152_title">v1.5.2 · 2026.11.10</string>
+    <string-array name="changelog_152_features">
+        <item>回收站卡片中的事件名称改为白色，其他文字颜色保持不变</item>
+        <item>新增“回收站设置”二级页：保留自动删除事件、回收站保留时长、恢复事件保留时长</item>
+        <item>已超过截止日期两天、再从回收站恢复的事件默认只再保留 12 小时，可自定义时长</item>
+        <item>设置-外观重组为“背景”“圆角矩形卡片”“更多设置”，分别进入二级界面</item>
+        <item>新增清单卡片与设置界面的字体颜色自定义，支持一键恢复默认颜色</item>
+        <item>拖动排序时其他卡片实时跟随移动，并在长按时加入克制的放大反馈</item>
+    </string-array>
+    <string-array name="changelog_152_fixes">
+        <item>修复拖动圆角矩形时其他卡片要松手后才移动的问题</item>
+        <item>优化拖动排序的视觉反馈，避免长按放大时遮挡相邻卡片</item>
+    </string-array>
+    <string name="changelog_151_title">v1.5.1 · 2026.11.9</string>
+    <string-array name="changelog_151_fixes">
+        <item>修复垃圾桶图标的显示问题</item>
+        <item>修复左滑卡片的卡顿问题</item>
+    </string-array>
+    <string name="changelog_150_title">v1.5.0 · 2026.11.9</string>
+    <string name="changelog_142_title">v1.4.2 · 2026.11.9</string>
+    <string-array name="changelog_150_features">
+        <item>事件编辑页新增“备注”，可上传本地图片或文件，点击附件即用系统默认应用打开</item>
+        <item>添加了左滑事件删除的快捷功能：左滑卡片弹出红色垃圾桶，点击即可删除</item>
+        <item>新增回收站：从清单右上角“⋮”菜单进入，可恢复或彻底删除任务</item>
+        <item>设置-数据管理新增回收站选项：可保留到期自动删除的事件，并调整保留时长（1-30 天）</item>
+    </string-array>
+    <string-array name="changelog_142_features">
+        <item>列表顶部不再显示排序提示和“恢复默认排序”按钮，改为点击清单名右侧的“⋮”菜单恢复默认排序</item>
+        <item>新增“更多设置”二级页面，卡片填充透明度与兼容渲染集中管理</item>
+        <item>缩小顶栏高度；底部栏改为透明并缩小，仍保留可读性遮挡</item>
+        <item>新建任务先选日期，默认时间 23:59；日期与时间选择相互独立</item>
+        <item>长按整张卡片即可拖动排序，拖动时整张卡片变暗</item>
+        <item>已截止未完成任务置顶显示，并显示 48 小时后移除的倒计时</item>
+        <item>从设置返回清单页不再弹出清单选择，直接回到上次所在清单</item>
+        <item>点击版本号可以查看本次更新日志</item>
+    </string-array>
+    <string-array name="changelog_142_fixes">
+        <item>修复任务占满屏幕时，拖动最顶部任务导致界面突然跳转的问题</item>
+        <item>修复拖动排序时卡片内文字跳动后又恢复的问题</item>
+    </string-array>
+    <string-array name="changelog_160_features">
+        <item>更新了卡片渲染实现逻辑。</item>
+    </string-array>
+</resources>
