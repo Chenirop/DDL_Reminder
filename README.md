@@ -1,5 +1,5 @@
 # DDL_Reminder
-最新版本👉[点击下载](https://github.com/Chenirop/DDL_Reminder/releases/latest)
+最新版本👉[点击跳转](https://github.com/Chenirop/DDL_Reminder/releases/latest)
 
 
 
