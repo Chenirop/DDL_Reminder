@@ -1,7 +1,4 @@
-<img width="1080" height="2400" alt="Screenshot_20261122_175913" src="https://github.com/user-attachments/assets/fbb71290-325e-4460-8b00-d547b963f0b6" /># DDL_Reminder
 最新版本👉[点击跳转](https://github.com/Chenirop/DDL_Reminder/releases/latest)
-
-
 
 <span style="font-size:22px">📁历史版本</span>
 
@@ -18,7 +15,8 @@
 </p>
 
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/f7d66717-aa2a-45f3-8fe1-c76467b679e5" width="350" />
+  <img src="https://github.com/user-attachments/assets/674ed871-9a21-480f-9fde-fec003fa1459" width="280" />
+  <img src="https://github.com/user-attachments/assets/56b4e0db-7816-421a-a765-a5bdd7c731a3" width="280" />
 </p>
 
 
