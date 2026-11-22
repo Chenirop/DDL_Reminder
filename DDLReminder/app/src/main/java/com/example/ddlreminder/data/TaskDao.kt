@@ -14,10 +14,11 @@ interface TaskDao {
     @Query(
         """
         SELECT l.id AS id, l.name AS name,
+               l.notificationsEnabled AS notificationsEnabled,
                COUNT(CASE WHEN t.isCompleted = 0 THEN 1 END) AS pendingCount
         FROM task_lists l
         LEFT JOIN tasks t ON t.listId = l.id AND t.deletedAt IS NULL
-        GROUP BY l.id, l.name, l.createdAt
+        GROUP BY l.id, l.name, l.createdAt, l.notificationsEnabled
         ORDER BY l.createdAt ASC
         """
     )
@@ -34,6 +35,12 @@ interface TaskDao {
 
     @Query("SELECT * FROM task_lists WHERE name = :name LIMIT 1")
     suspend fun findListByName(name: String): TaskListEntity?
+
+    @Query(
+        "UPDATE task_lists SET notificationsEnabled = :enabled, updatedAt = :now " +
+            "WHERE id = :id"
+    )
+    suspend fun setListNotifications(id: Long, enabled: Boolean, now: Long)
 
     @Query("SELECT * FROM task_lists ORDER BY createdAt ASC")
     suspend fun getAllLists(): List<TaskListEntity>

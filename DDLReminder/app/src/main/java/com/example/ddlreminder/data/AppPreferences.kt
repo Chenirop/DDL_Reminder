@@ -262,6 +262,35 @@ class AppPreferences(context: Context) {
         get() = prefs.getBoolean(KEY_WINUI_PERFORMANCE, false)
         set(value) = prefs.edit().putBoolean(KEY_WINUI_PERFORMANCE, value).apply()
 
+    /**
+     * Restores every user facing setting to its default value. The user name
+     * and the currently selected list are deliberately kept, and no Room data
+     * is touched.
+     */
+    fun resetToDefaults() {
+        prefs.edit()
+            .remove(KEY_BACKGROUND_URI)
+            .remove(KEY_GLASS_FILL_ALPHA)
+            .remove(KEY_GLASS_COMPAT_MODE)
+            .remove(KEY_RENDER_SCHEME)
+            .remove(KEY_OVERDUE_TEXT_SCALE)
+            .remove(KEY_KEEP_AUTO_DELETED)
+            .remove(KEY_TRASH_RETENTION_DAYS)
+            .remove(KEY_TRASH_RESTORE_RETENTION_HOURS)
+            .remove(KEY_TABLE_TEXT_COLOR)
+            .remove(KEY_SETTINGS_TEXT_COLOR)
+            .remove(KEY_SOLID_FILL_ALPHA)
+            .remove(KEY_SOLID_FILL_COLOR)
+            .remove(KEY_SOLID_STROKE_WIDTH)
+            .remove(KEY_WINUI_FILL_ALPHA)
+            .remove(KEY_WINUI_BLUR)
+            .remove(KEY_WINUI_REFRACTION)
+            .remove(KEY_WINUI_CHROMATIC)
+            .remove(KEY_WINUI_GLARE)
+            .remove(KEY_WINUI_PERFORMANCE)
+            .apply()
+    }
+
     companion object {
         private const val PREFS_NAME = "ddl_preferences"
         private const val KEY_USER_NAME = "user_name"

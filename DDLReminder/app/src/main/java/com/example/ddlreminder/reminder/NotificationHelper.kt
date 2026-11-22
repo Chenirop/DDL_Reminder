@@ -23,6 +23,15 @@ object NotificationHelper {
     const val CHANNEL_ID = "ddl_task_reminders"
     const val EXTRA_LIST_ID = "extra_list_id"
     const val EXTRA_TASK_ID = "extra_task_id"
+    const val ACTION_DISMISS_REMINDER = "com.example.ddlreminder.action.DISMISS_REMINDER"
+
+    /** Removes the posted 24h / 12h notifications of one task. */
+    fun cancelTask(context: Context, taskId: Long) {
+        val manager = NotificationManagerCompat.from(context)
+        ReminderType.entries.forEach { type ->
+            manager.cancel(ReminderIds.forReminder(taskId, type))
+        }
+    }
 
     fun createChannel(context: Context) {
         val manager = context.getSystemService(NotificationManager::class.java) ?: return
@@ -94,15 +103,44 @@ object NotificationHelper {
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
 
+        val alertIntent = Intent(context, ReminderAlertActivity::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK or
+                Intent.FLAG_ACTIVITY_CLEAR_TOP or
+                Intent.FLAG_ACTIVITY_SINGLE_TOP
+            putExtra(EXTRA_LIST_ID, task.listId)
+            putExtra(EXTRA_TASK_ID, task.id)
+        }
+        val alertPendingIntent = PendingIntent.getActivity(
+            context,
+            notificationId + 1_000_000,
+            alertIntent,
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+        )
+        val dismissIntent = Intent(context, ReminderReceiver::class.java).apply {
+            action = ACTION_DISMISS_REMINDER
+            data = android.net.Uri.parse("ddlreminder://dismiss/${task.id}")
+            putExtra(EXTRA_TASK_ID, task.id)
+        }
+        val dismissPendingIntent = PendingIntent.getBroadcast(
+            context,
+            notificationId + 2_000_000,
+            dismissIntent,
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+        )
+
         val notification = NotificationCompat.Builder(context, CHANNEL_ID)
             .setSmallIcon(R.drawable.ic_notification)
             .setContentTitle(contentTitle)
             .setContentText(contentText)
             .setStyle(NotificationCompat.BigTextStyle().bigText(contentText))
             .setPriority(NotificationCompat.PRIORITY_HIGH)
-            .setCategory(NotificationCompat.CATEGORY_REMINDER)
+            .setCategory(NotificationCompat.CATEGORY_ALARM)
             .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
-            .setAutoCancel(true)
+            .setAutoCancel(false)
+            .setOngoing(true)
+            .setOnlyAlertOnce(true)
+            .setFullScreenIntent(alertPendingIntent, true)
+            .addAction(0, "关闭提醒", dismissPendingIntent)
             .setWhen(System.currentTimeMillis())
             .setShowWhen(true)
             .setColor(ContextCompat.getColor(context, R.color.ic_launcher_background))

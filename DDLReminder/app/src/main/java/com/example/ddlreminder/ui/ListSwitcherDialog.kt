@@ -16,6 +16,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.MoreVert
+import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.HorizontalDivider
@@ -51,6 +52,7 @@ fun ListSwitcherDialog(
     onCreate: (String) -> Unit,
     onRename: (ListSummary) -> Unit,
     onDelete: (ListSummary) -> Unit,
+    onToggleNotifications: (ListSummary) -> Unit,
     onDismiss: () -> Unit
 ) {
     var adding by remember { mutableStateOf(false) }
@@ -86,7 +88,8 @@ fun ListSwitcherDialog(
                                 selected = summary.id == selectedListId,
                                 onClick = { onSelect(summary.id) },
                                 onRename = { onRename(summary) },
-                                onDelete = { onDelete(summary) }
+                                onDelete = { onDelete(summary) },
+                                onToggleNotifications = { onToggleNotifications(summary) }
                             )
                         }
                     }
@@ -149,7 +152,8 @@ private fun ListPickerRow(
     selected: Boolean,
     onClick: () -> Unit,
     onRename: () -> Unit,
-    onDelete: () -> Unit
+    onDelete: () -> Unit,
+    onToggleNotifications: () -> Unit
 ) {
     var menuExpanded by remember { mutableStateOf(false) }
 
@@ -195,6 +199,27 @@ private fun ListPickerRow(
             }
         }
 
+        IconButton(
+            onClick = onToggleNotifications,
+            modifier = Modifier.size(40.dp)
+        ) {
+            Icon(
+                imageVector = Icons.Default.Notifications,
+                contentDescription = stringResource(
+                    if (summary.notificationsEnabled) {
+                        R.string.list_notifications_on
+                    } else {
+                        R.string.list_notifications_off
+                    }
+                ),
+                tint = if (summary.notificationsEnabled) {
+                    MaterialTheme.colorScheme.primary
+                } else {
+                    MaterialTheme.colorScheme.outline.copy(alpha = 0.5f)
+                },
+                modifier = Modifier.size(20.dp)
+            )
+        }
         IconButton(onClick = { menuExpanded = true }) {
             Icon(
                 imageVector = Icons.Default.MoreVert,

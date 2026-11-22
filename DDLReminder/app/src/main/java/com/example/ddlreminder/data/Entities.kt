@@ -18,7 +18,10 @@ data class TaskListEntity(
     val id: Long = 0L,
     val name: String,
     val createdAt: Long,
-    val updatedAt: Long
+    val updatedAt: Long,
+    /** Whether tasks of this list may pop up reminder notifications. */
+    @ColumnInfo(defaultValue = "1")
+    val notificationsEnabled: Boolean = true
 )
 
 @Entity(

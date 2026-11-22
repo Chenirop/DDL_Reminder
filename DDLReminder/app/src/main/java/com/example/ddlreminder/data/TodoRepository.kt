@@ -34,6 +34,9 @@ class TodoRepository(private val dao: TaskDao) {
 
     suspend fun findListByName(name: String): TaskListEntity? = dao.findListByName(name)
 
+    suspend fun setListNotifications(listId: Long, enabled: Boolean, now: Long) =
+        dao.setListNotifications(listId, enabled, now)
+
     suspend fun getAllLists(): List<TaskListEntity> = dao.getAllLists()
 
     suspend fun getFirstList(): TaskListEntity? = dao.getFirstList()

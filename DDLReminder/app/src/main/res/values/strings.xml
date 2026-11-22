@@ -138,7 +138,7 @@
     <string name="more_settings">更多设置</string>
     <string name="more_settings_desc">已截止标记字号</string>
     <string name="more_settings_hint">这些选项只影响圆角矩形卡片的外观。</string>
-    <string name="more_settings_empty">暂无更多设置项，相关选项已移至“圆角矩形卡片”。</string>
+    <string name="more_settings_empty">恢复默认设置</string>
     <string name="overdue_removal_countdown">%1$s后将从表中移除</string>
     <string name="overdue_text_scale_title">已截止标记字号</string>
     <string name="overdue_text_scale_desc">调整“XXdayXXhourXXmin后将从表中移除”的字号，最大不超过原始大小</string>
@@ -165,7 +165,7 @@
     <string name="settings_background">背景</string>
     <string name="settings_background_desc">更换背景图片或恢复默认背景</string>
     <string name="settings_glass_cards">圆角矩形卡片</string>
-    <string name="settings_glass_cards_desc">填充透明度、渲染方案与字体颜色</string>
+    <string name="settings_glass_cards_desc">卡片渲染方案、字体颜色等</string>
     <string name="table_text_color_title">清单卡片字体颜色</string>
     <string name="table_text_color_desc">清单中圆角矩形框内文字的颜色</string>
     <string name="settings_text_color_title">设置界面字体颜色</string>
@@ -174,7 +174,7 @@
     <string name="color_hint">颜色较浅时可能与背景接近，建议选择对比明显的颜色。</string>
 
     <string name="changelog_title">更新日志</string>
-    <string name="changelog_updated_at">更新时间 2026.11.14</string>
+    <string name="changelog_updated_at">更新时间 2026.11.21</string>
     <string name="changelog_features">功能更新</string>
     <string name="changelog_fixes">Bug 修复</string>
     <string name="changelog_154_title">v1.5.4 · 2026.11.14</string>
@@ -255,5 +255,25 @@
     </string-array>
     <string-array name="changelog_160_features">
         <item>更新了卡片渲染实现逻辑。</item>
+    </string-array>
+    <string name="list_notifications_on">提醒已开启</string>
+    <string name="list_notifications_off">提醒已关闭</string>
+    <string name="adjust_background">调整背景区域</string>
+    <string name="adjust_background_desc">重新选择这张图片要显示的部分</string>
+    <string name="reset_all_settings">恢复默认设置</string>
+    <string name="reset_all_settings_desc">把外观、背景、字体颜色与回收站等设置恢复为默认状态</string>
+    <string name="reset_all_settings_confirm_title">恢复默认设置？</string>
+    <string name="reset_all_settings_confirm_message">外观、背景、字体颜色、回收站等设置都会回到默认值。清单、任务和回收站数据不会受到影响。</string>
+    <string name="reset_all_settings_confirm">恢复默认</string>
+    <string name="changelog_161_title">v1.6.1 · 2026.11.21</string>
+    <string-array name="changelog_161_features">
+        <item>更换背景图片时可以自己选择显示图片的哪一部分，并支持预览</item>
+        <item>每个清单可单独开关弹窗提醒，关闭后该清单不再弹出提醒</item>
+        <item>长按卡片拖动时不再变暗，保留放大等效果</item>
+        <item>设置里的“更多设置”新增“恢复默认设置”，可一键把设置恢复到默认状态</item>
+    </string-array>
+    <string-array name="changelog_161_fixes">
+        <item>修复纯色渲染方案下圆角矩形里出现小块矩形的问题</item>
+        <item>提醒改为常驻通知并支持锁屏全屏提醒，不会解锁后自动消失</item>
     </string-array>
 </resources>

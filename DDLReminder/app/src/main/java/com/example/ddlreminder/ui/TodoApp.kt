@@ -78,6 +78,7 @@ fun TodoApp(
     val message by viewModel.message.collectAsStateWithLifecycle()
     val importPreview by viewModel.importPreview.collectAsStateWithLifecycle()
     val background by viewModel.background.collectAsStateWithLifecycle()
+    val backgroundCrop by viewModel.backgroundCrop.collectAsStateWithLifecycle()
     val glassFillAlpha by viewModel.glassFillAlpha.collectAsStateWithLifecycle()
     val renderScheme by viewModel.renderScheme.collectAsStateWithLifecycle()
     val winuiFillAlpha by viewModel.winuiFillAlpha.collectAsStateWithLifecycle()
@@ -308,7 +309,7 @@ fun TodoApp(
                         onRenameUser = { showRenameUser = true },
                         onExport = viewModel::exportData,
                         onImport = viewModel::prepareImport,
-                        onBackgroundPicked = viewModel::setBackground,
+                        onBackgroundPicked = viewModel::prepareBackgroundCrop,
                         onResetBackground = viewModel::restoreDefaultBackground,
                         onGlassFillAlphaChange = viewModel::setGlassFillAlpha,
                         onRenderSchemeChange = viewModel::setRenderScheme,
@@ -327,6 +328,7 @@ fun TodoApp(
                         onSolidFillAlphaChange = viewModel::setSolidFillAlpha,
                         onSolidFillColorChange = viewModel::setSolidFillColor,
                         onSolidStrokeWidthChange = viewModel::setSolidStrokeWidth,
+                        onResetAllSettings = viewModel::resetAllSettings,
                         onOpenNotificationSettings = onOpenNotificationSettings,
                         onOpenExactAlarmSettings = onOpenExactAlarmSettings
                     )
@@ -364,6 +366,14 @@ fun TodoApp(
                     )
                 }
             }
+
+            backgroundCrop?.let { bitmap ->
+                BackgroundCropScreen(
+                    source = bitmap,
+                    onCancel = viewModel::cancelBackgroundCrop,
+                    onConfirm = viewModel::applyBackgroundCrop
+                )
+            }
         }
     }
 
@@ -388,6 +398,9 @@ fun TodoApp(
             onDelete = { summary ->
                 showListPicker = false
                 deleteTarget = summary
+            },
+            onToggleNotifications = { summary ->
+                viewModel.setListNotifications(summary.id, !summary.notificationsEnabled)
             },
             onDismiss = { showListPicker = false }
         )

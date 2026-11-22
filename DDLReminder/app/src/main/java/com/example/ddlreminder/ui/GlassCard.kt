@@ -810,17 +810,26 @@ fun GlassCard(
     val tintColor = if (useDarkGlass) Color.Black else Color.White
     val viewportSize = Size(viewport.width.toFloat(), viewport.height.toFloat())
 
+    // A flat solid fill is translucent, so the elevation shadow behind the
+    // card would show through it as a rectangular block. The solid scheme is
+    // meant to be a clean flat colour, so it skips the shadow entirely.
+    val elevationModifier = if (isSolid) {
+        Modifier
+    } else {
+        Modifier.shadow(
+            elevation = 12.dp,
+            shape = shape,
+            clip = false,
+            ambientColor = Color.Black.copy(alpha = 0.16f),
+            spotColor = Color.Black.copy(alpha = 0.22f)
+        )
+    }
+
     Box(
         modifier = modifier
             .fillMaxWidth()
             .graphicsLayer { alpha = if (completed) 0.5f else 1f }
-            .shadow(
-                elevation = 12.dp,
-                shape = shape,
-                clip = false,
-                ambientColor = Color.Black.copy(alpha = 0.16f),
-                spotColor = Color.Black.copy(alpha = 0.22f)
-            )
+            .then(elevationModifier)
             .clip(shape)
             .onGloballyPositioned { coordinates ->
                 val newPosition = coordinates.positionInRoot()

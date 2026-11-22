@@ -1,6 +1,7 @@
 package com.example.ddlreminder.ui
 
 import android.app.Application
+import android.graphics.Bitmap
 import android.net.Uri
 import android.provider.OpenableColumns
 import androidx.lifecycle.AndroidViewModel
@@ -19,6 +20,7 @@ import com.example.ddlreminder.data.TodoDatabase
 import com.example.ddlreminder.data.TodoRepository
 import com.example.ddlreminder.data.TrashCleanup
 import com.example.ddlreminder.data.TrashItem
+import com.example.ddlreminder.reminder.NotificationHelper
 import com.example.ddlreminder.reminder.ReminderScheduler
 import com.example.ddlreminder.util.AttachmentStore
 import com.example.ddlreminder.util.TaskOrdering
@@ -66,6 +68,10 @@ class TodoViewModel(application: Application) : AndroidViewModel(application) {
 
     /** Background picture state, observed by the whole UI layer. */
     val background: StateFlow<BackgroundState> = backgroundRepository.state
+
+    /** Non null while the user picks the visible part of a new background. */
+    private val _backgroundCrop = MutableStateFlow<Bitmap?>(null)
+    val backgroundCrop: StateFlow<Bitmap?> = _backgroundCrop.asStateFlow()
 
     /** Opacity of the glass card fill; 0 = fully transparent, 1 = opaque. */
     private val _glassFillAlpha = MutableStateFlow(preferences.glassFillAlpha)
@@ -574,6 +580,51 @@ class TodoViewModel(application: Application) : AndroidViewModel(application) {
         _message.value = "已恢复默认背景"
     }
 
+    /** Loads [uri] and opens the crop dialog instead of applying it directly. */
+    fun prepareBackgroundCrop(uri: Uri) {
+        viewModelScope.launch {
+            val source = backgroundRepository.loadForCrop(uri)
+            if (source != null) {
+                _backgroundCrop.value = source
+            } else {
+                _message.value = "无法读取所选图片"
+            }
+        }
+    }
+
+    fun cancelBackgroundCrop() {
+        _backgroundCrop.value = null
+    }
+
+    /** Persists the cropped area as the new background picture. */
+    fun applyBackgroundCrop(bitmap: Bitmap) {
+        viewModelScope.launch {
+            val applied = backgroundRepository.applyCropped(bitmap)
+            _backgroundCrop.value = null
+            _message.value = if (applied) "背景图片已更新" else "无法保存背景图片"
+        }
+    }
+
+    /**
+     * Turns pop-up reminders on/off for one whole list. Disabling also removes
+     * notifications that are already posted.
+     */
+    fun setListNotifications(listId: Long, enabled: Boolean) {
+        viewModelScope.launch {
+            val now = System.currentTimeMillis()
+            repository.setListNotifications(listId, enabled, now)
+            repository.getTasksForList(listId).forEach { task ->
+                if (!enabled) {
+                    reminderScheduler.cancelTask(task.id)
+                    NotificationHelper.cancelTask(appContext, task.id)
+                } else if (!task.isCompleted && task.ddl != null) {
+                    reminderScheduler.scheduleTask(task)
+                }
+            }
+            _message.value = if (enabled) "已开启该清单的提醒" else "已关闭该清单的提醒"
+        }
+    }
+
     /** [alpha] is the fill opacity (0 transparent .. 1 opaque). */
     fun setGlassFillAlpha(alpha: Float) {
         val clamped = alpha.coerceIn(
@@ -676,6 +727,39 @@ class TodoViewModel(application: Application) : AndroidViewModel(application) {
         )
         _overdueTextScale.value = clamped
         preferences.overdueTextScale = clamped
+    }
+
+    /**
+     * Puts every preference back to its default. Lists, tasks, trash items and
+     * the user name are untouched; only appearance and reminder settings reset.
+     */
+    fun resetAllSettings() {
+        preferences.resetToDefaults()
+        backgroundRepository.clear()
+        _backgroundCrop.value = null
+        _glassFillAlpha.value = preferences.glassFillAlpha
+        _renderScheme.value = preferences.renderScheme
+        _winuiFillAlpha.value = preferences.winuiFillAlpha
+        _winuiBlur.value = preferences.winuiBlur
+        _winuiRefraction.value = preferences.winuiRefraction
+        _winuiChromatic.value = preferences.winuiChromatic
+        _winuiGlare.value = preferences.winuiGlare
+        _winuiPerformanceMode.value = preferences.winuiPerformanceMode
+        _overdueTextScale.value = preferences.overdueTextScale
+        _keepAutoDeletedInTrash.value = preferences.keepAutoDeletedInTrash
+        _trashRetentionDays.value = preferences.trashRetentionDays
+        _trashRestoreRetentionHours.value = preferences.trashRestoreRetentionHours
+        _tableTextColor.value = preferences.tableTextColor
+        _settingsTextColor.value = preferences.settingsTextColor
+        _solidFillAlpha.value = preferences.solidFillAlpha
+        _solidFillColor.value = preferences.solidFillColor
+        _solidStrokeWidth.value = preferences.solidStrokeWidth
+        _message.value = "已恢复默认设置"
+        viewModelScope.launch {
+            repository.getAllTasks()
+                .filter { !it.isCompleted }
+                .forEach { scheduleOverdueCleanup(it) }
+        }
     }
 
     fun consumeMessage() {

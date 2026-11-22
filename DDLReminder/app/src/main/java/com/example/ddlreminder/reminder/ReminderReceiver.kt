@@ -13,6 +13,11 @@ import kotlinx.coroutines.launch
 class ReminderReceiver : BroadcastReceiver() {
 
     override fun onReceive(context: Context, intent: Intent) {
+        if (intent.action == NotificationHelper.ACTION_DISMISS_REMINDER) {
+            val taskId = intent.getLongExtra(NotificationHelper.EXTRA_TASK_ID, -1L)
+            if (taskId > 0L) NotificationHelper.cancelTask(context, taskId)
+            return
+        }
         if (intent.action != ReminderScheduler.ACTION_REMIND) return
 
         val taskId = intent.getLongExtra(ReminderScheduler.EXTRA_TASK_ID, -1L)
@@ -60,6 +65,8 @@ class ReminderReceiver : BroadcastReceiver() {
         if (!NotificationHelper.canPostNotifications(context)) return
 
         val list = dao.getList(task.listId) ?: return
+        // Whole-list switch: posting nothing is the whole point of the toggle.
+        if (!list.notificationsEnabled) return
         val repository = TodoRepository(dao)
         val is24Hour = type == ReminderType.TWENTY_FOUR_HOURS
         val claimed = repository.claimReminder(task.id, is24Hour)

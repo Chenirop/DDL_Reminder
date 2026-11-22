@@ -7,6 +7,8 @@ import android.graphics.BitmapFactory
 import android.graphics.ImageDecoder
 import android.net.Uri
 import android.os.Build
+import java.io.File
+import java.io.FileOutputStream
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.asImageBitmap
 import kotlinx.coroutines.Dispatchers
@@ -72,6 +74,70 @@ class BackgroundRepository(context: Context) {
             _state.value = _state.value.copy(loading = false)
             false
         }
+    }
+
+    /** Decodes the picture at a size that gives the crop UI room to work. */
+    suspend fun loadForCrop(uri: Uri): Bitmap? = withContext(Dispatchers.IO) {
+        runCatching {
+            appContext.contentResolver.takePersistableUriPermission(
+                uri,
+                Intent.FLAG_GRANT_READ_URI_PERMISSION
+            )
+        }
+        runCatching {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+                val source = ImageDecoder.createSource(appContext.contentResolver, uri)
+                ImageDecoder.decodeBitmap(source) { decoder, info, _ ->
+                    decoder.allocator = ImageDecoder.ALLOCATOR_SOFTWARE
+                    decoder.isMutableRequired = false
+                    decoder.memorySizePolicy = ImageDecoder.MEMORY_POLICY_LOW_RAM
+                    val longest = max(info.size.width, info.size.height)
+                    if (longest > MAX_CROP_SIZE) {
+                        val scale = MAX_CROP_SIZE.toFloat() / longest
+                        decoder.setTargetSize(
+                            (info.size.width * scale).roundToInt().coerceAtLeast(1),
+                            (info.size.height * scale).roundToInt().coerceAtLeast(1)
+                        )
+                    }
+                }
+            } else {
+                val bounds = BitmapFactory.Options().apply { inJustDecodeBounds = true }
+                appContext.contentResolver.openInputStream(uri)?.use {
+                    BitmapFactory.decodeStream(it, null, bounds)
+                }
+                val longest = max(bounds.outWidth, bounds.outHeight)
+                var sample = 1
+                while (longest / (sample * 2) >= MAX_CROP_SIZE) sample *= 2
+                val options = BitmapFactory.Options().apply {
+                    inSampleSize = sample
+                    inPreferredConfig = Bitmap.Config.ARGB_8888
+                }
+                appContext.contentResolver.openInputStream(uri)?.use {
+                    BitmapFactory.decodeStream(it, null, options)
+                }
+            }
+        }.getOrNull()
+    }
+
+    /**
+     * Stores [bitmap] (the exact area the user chose) as the persisted
+     * background. Old crops are removed so files do not pile up.
+     */
+    suspend fun applyCropped(bitmap: Bitmap): Boolean = withContext(Dispatchers.IO) {
+        runCatching {
+            val dir = File(appContext.filesDir, BACKGROUND_DIR)
+            if (!dir.exists() && !dir.mkdirs()) return@runCatching false
+            dir.listFiles()?.forEach { it.delete() }
+            val file = File(dir, "background-${System.currentTimeMillis()}.jpg")
+            FileOutputStream(file).use { out ->
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 92, out)
+            }
+            val uri = Uri.fromFile(file)
+            val decoded = decode(uri) ?: return@runCatching false
+            preferences.backgroundUri = uri.toString()
+            _state.value = BackgroundState(uri = uri, bitmap = decoded)
+            true
+        }.getOrDefault(false)
     }
 
     /** Removes the custom picture and falls back to the default gradient. */
@@ -152,5 +218,7 @@ class BackgroundRepository(context: Context) {
 
     private companion object {
         const val MAX_DECODED_PIXELS = 8_000_000f
+        const val MAX_CROP_SIZE = 2048
+        const val BACKGROUND_DIR = "backgrounds"
     }
 }

@@ -174,6 +174,7 @@ fun SettingsScreen(
     onSolidFillAlphaChange: (Float) -> Unit,
     onSolidFillColorChange: (Int) -> Unit,
     onSolidStrokeWidthChange: (Float) -> Unit,
+    onResetAllSettings: () -> Unit,
     onOpenNotificationSettings: () -> Unit,
     onOpenExactAlarmSettings: () -> Unit
 ) {
@@ -181,6 +182,7 @@ fun SettingsScreen(
     val page = SettingsPage.entries[pageOrdinal]
     var showChangelog by rememberSaveable { mutableStateOf(false) }
     var showSolidColorPicker by rememberSaveable { mutableStateOf(false) }
+    var showResetAllSettings by rememberSaveable { mutableStateOf(false) }
     var colorTarget by remember { mutableStateOf<ColorTarget?>(null) }
 
     val colors = remember(settingsTextColor) { settingsColors(settingsTextColor) }
@@ -714,11 +716,12 @@ fun SettingsScreen(
                     tint = GlassTint.Dark,
                     contentPadding = PaddingValues(horizontal = 18.dp, vertical = 4.dp)
                 ) {
-                    Text(
-                        text = stringResource(R.string.more_settings_empty),
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = colors.muted,
-                        modifier = Modifier.padding(vertical = 16.dp)
+                    SettingsActionRow(
+                        icon = Icons.Default.Refresh,
+                        title = stringResource(R.string.reset_all_settings),
+                        subtitle = stringResource(R.string.reset_all_settings_desc),
+                        colors = colors,
+                        onClick = { showResetAllSettings = true }
                     )
                 }
             }
@@ -727,6 +730,39 @@ fun SettingsScreen(
 
     if (showChangelog) {
         ChangelogDialog(colors = colors, onDismiss = { showChangelog = false })
+    }
+
+    if (showResetAllSettings) {
+        AlertDialog(
+            onDismissRequest = { showResetAllSettings = false },
+            title = {
+                Text(
+                    text = stringResource(R.string.reset_all_settings_confirm_title),
+                    color = colors.primary
+                )
+            },
+            text = {
+                Text(
+                    text = stringResource(R.string.reset_all_settings_confirm_message),
+                    color = colors.secondary
+                )
+            },
+            confirmButton = {
+                TextButton(
+                    onClick = {
+                        showResetAllSettings = false
+                        onResetAllSettings()
+                    }
+                ) {
+                    Text(stringResource(R.string.reset_all_settings_confirm), color = colors.primary)
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = { showResetAllSettings = false }) {
+                    Text(stringResource(R.string.cancel), color = colors.secondary)
+                }
+            }
+        )
     }
 
     val target = colorTarget
@@ -1220,6 +1256,12 @@ private fun ChangelogDialog(colors: SettingsColors, onDismiss: () -> Unit) {
                     color = colors.muted
                 )
                 Spacer(Modifier.height(10.dp))
+                ChangelogVersionBlock(
+                    versionTitle = stringResource(R.string.changelog_161_title),
+                    features = stringArrayResource(R.array.changelog_161_features).toList(),
+                    fixes = stringArrayResource(R.array.changelog_161_fixes).toList(),
+                    colors = colors
+                )
                 ChangelogVersionBlock(
                     versionTitle = stringResource(R.string.changelog_160_title),
                     features = stringArrayResource(R.array.changelog_160_features).toList(),

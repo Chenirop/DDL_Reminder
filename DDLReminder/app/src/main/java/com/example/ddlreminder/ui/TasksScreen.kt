@@ -68,6 +68,7 @@ import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import com.example.ddlreminder.R
+import com.example.ddlreminder.data.RenderScheme
 import com.example.ddlreminder.data.TaskAttachmentEntity
 import com.example.ddlreminder.data.TaskEntity
 import com.example.ddlreminder.util.TaskRetention
@@ -643,7 +644,7 @@ private fun SwipeableTaskRow(
                 overdueTextScale = overdueTextScale,
                 restoreRetentionHours = restoreRetentionHours,
                 tableTextColor = tableTextColor,
-                dimmed = isDragging,
+                dimmed = false,
                 // Only the drag lift is a graphicsLayer translation. Slot shifts
                 // and the left swipe both move positionInRoot already, so they must
                 // not be compensated a second time here.

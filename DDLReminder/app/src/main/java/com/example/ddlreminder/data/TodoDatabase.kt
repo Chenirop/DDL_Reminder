@@ -9,7 +9,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 
 @Database(
     entities = [TaskListEntity::class, TaskEntity::class, TaskAttachmentEntity::class],
-    version = 4,
+    version = 5,
     exportSchema = false
 )
 abstract class TodoDatabase : RoomDatabase() {
@@ -70,6 +70,19 @@ abstract class TodoDatabase : RoomDatabase() {
             }
         }
 
+        /**
+         * Per-list switch that decides whether the list may pop up reminder
+         * notifications at all.
+         */
+        private val MIGRATION_4_5 = object : Migration(4, 5) {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                database.execSQL(
+                    "ALTER TABLE task_lists ADD COLUMN notificationsEnabled " +
+                        "INTEGER NOT NULL DEFAULT 1"
+                )
+            }
+        }
+
         fun get(context: Context): TodoDatabase =
             INSTANCE ?: synchronized(this) {
                 INSTANCE ?: Room.databaseBuilder(
@@ -77,7 +90,7 @@ abstract class TodoDatabase : RoomDatabase() {
                     TodoDatabase::class.java,
                     DB_NAME
                 )
-                    .addMigrations(MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4)
+                    .addMigrations(MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4, MIGRATION_4_5)
                     .fallbackToDestructiveMigration()
                     .build()
                     .also { INSTANCE = it }
