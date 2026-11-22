@@ -1,4 +1,4 @@
-# DDL_Reminder
+<img width="1080" height="2400" alt="Screenshot_20261122_175913" src="https://github.com/user-attachments/assets/fbb71290-325e-4460-8b00-d547b963f0b6" /># DDL_Reminder
 最新版本👉[点击跳转](https://github.com/Chenirop/DDL_Reminder/releases/latest)
 
 
@@ -10,9 +10,12 @@
 | v1.6.1 | 2026.11.21 | [下载 APK](https://github.com/Chenirop/DDL_Reminder/releases/download/v1.6.1/DDL-Reminder-v1.6.1.apk) |
 | v1.6.0 | 2026.11.14 | [下载 APK](https://github.com/Chenirop/DDL_Reminder/releases/download/v1.6.0/DDL-Reminder-v1.6.0.4.apk) |
 
-
-
 <span style="font-size:22px">🌟效果预览</span>
+
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/30af8e01-4620-4c91-a220-0fa7cebac240" width="280" />
+  <img src="https://github.com/user-attachments/assets/67b22e06-eca1-44a7-8c4c-4b43b3a749d6" width="280" />
+</p>
 
 <p align="center">
   <img src="https://github.com/user-attachments/assets/f7d66717-aa2a-45f3-8fe1-c76467b679e5" width="350" />
